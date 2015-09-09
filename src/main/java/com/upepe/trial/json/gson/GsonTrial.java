@@ -1,4 +1,4 @@
-package com.upepe.trial.json.jackson;
+package com.upepe.trial.json.gson;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,23 +7,24 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 /**
- * JacksonTrial.
+ * GsonTrial.
  */
 @Slf4j
-public class JacksonTrial {
+public class GsonTrial {
 
     public static void main(String[] args) throws Exception {
         Actor actor = Actor.builder().name("ted").age(20).gender(GenderType.MALE).nickname(null).build();
-        ObjectMapper om = new ObjectMapper();
+        Gson gson = new Gson();
 
         // serialize
-        String json = om.writeValueAsString(actor);
+        String json = gson.toJson(actor);
         log.info("serialization json[{}]", json);
 
         // deserialize
-        Actor deserializationActor = om.readValue(json, Actor.class);
+        Actor deserializationActor = gson.fromJson(json, Actor.class);
         log.info("deserialization actor[{}]", actor);
     }
 
@@ -39,7 +40,6 @@ public class JacksonTrial {
     }
 
     public static enum GenderType {
-        MALE,
-        FEMALE;
+        MALE, FEMALE;
     }
 }
